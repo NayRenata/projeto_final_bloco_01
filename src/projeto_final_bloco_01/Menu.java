@@ -3,6 +3,7 @@ package projeto_final_bloco_01;
 import java.io.IOException;
 import java.util.Scanner;
 
+import projeto_final_bloco_01.controller.Controller;
 import projeto_final_bloco_01.model.Compra;
 import projeto_final_bloco_01.model.CompraFinalizada;
 import projeto_final_bloco_01.util.Cores;
@@ -13,13 +14,15 @@ public class Menu {
     static String nome, tel, email;
     static int menu;
     static float valorProduto;
-    
     int option;
+    
+    static Controller controller = new Controller();
 
     public static void main(String[] args) {
         Scanner leia = new Scanner(System.in);
 
-        System.out.println("*****************************************");
+        System.out.println(Cores.TEXT_RED + Cores.ANSI_BLACK_BACKGROUND
+				+"*****************************************");
         System.out.println("       Bem-vindos ao iFome, somos a      ");
         System.out.println("    maior rede de delivery do Brasil,    ");
         System.out.println("   sempre prontos a atender o nosso      ");
@@ -30,7 +33,8 @@ public class Menu {
         // Laço de repetição while
         while (true) {
 
-            System.out.println("*****************************************");
+            System.out.println(Cores.TEXT_RED + Cores.ANSI_BLACK_BACKGROUND
+					+"*****************************************");
             System.out.println("                                         ");
             System.out.println("                IFome Menu               ");
             System.out.println("                                         ");
@@ -103,7 +107,7 @@ public class Menu {
                     
                     System.out.println("Informe o seu email:");
                     email = leia.nextLine();
-                    
+                    controller.cadastrar();
                     keyPress();
                     break;
 
@@ -126,11 +130,13 @@ public class Menu {
                         case 1:
                             System.out.println("1-Café da manhã: pão de queijo recheado e suco de laranja.");
                             valorProduto = 25.0f;
+                            controller.listarProdutos();
                             keyPress();
                             break;
                         case 2:
                             System.out.println("2-Virada a paulista e suco de goiaba.");
                             valorProduto = 35.0f;
+                            controller.listarProdutos();
                             keyPress();
                             break;
                         case 3:
@@ -141,6 +147,7 @@ public class Menu {
                         case 4:
                             System.out.println("4-Bolo de chocolate com uma bola de creme.");
                             valorProduto = 15.0f;
+                            controller.listarProdutos();
                             keyPress();
                             break;
                         default:
@@ -162,6 +169,9 @@ public class Menu {
                         
                         CompraFinalizada compraFinalizada = new CompraFinalizada(cod++, titular, email, tel, valor, nome);
                         compraFinalizada.visualizar();
+                        
+                        controller.comprar(cod, valorProduto);
+                        
                     } else {
                         System.out.println("Cadastre-se corretamente primeiro antes de encerrar a compra");    
                     }
